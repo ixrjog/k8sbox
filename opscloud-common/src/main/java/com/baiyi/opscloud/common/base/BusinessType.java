@@ -8,12 +8,9 @@ package com.baiyi.opscloud.common.base;
 public enum BusinessType {
     SERVER(1),
     SERVERGROUP(2),
-    USER(3),
     USERGROUP(4),
-    CLOUD_DATABASE(5),
     /** 服务器器管理员账户 **/
-    SERVER_ADMINISTRATOR_ACCOUNT(6),
-    ALIYUN_RAM_ACCOUNT(7)
+    SERVER_ADMINISTRATOR_ACCOUNT(6)
     ;
 
     private int type;

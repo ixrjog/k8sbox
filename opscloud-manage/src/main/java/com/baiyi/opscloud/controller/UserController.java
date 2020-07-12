@@ -23,13 +23,15 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Map;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/2/20 11:09 上午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping(BASE_URL + "/user")
 @Api(tags = "用户管理")
 public class UserController {
 

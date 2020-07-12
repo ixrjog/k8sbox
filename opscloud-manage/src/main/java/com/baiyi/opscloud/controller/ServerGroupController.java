@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/2/21 10:54 上午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/server/group")
+@RequestMapping(BASE_URL + "/server/group")
 @Api(tags = "服务器组管理")
 public class ServerGroupController {
 

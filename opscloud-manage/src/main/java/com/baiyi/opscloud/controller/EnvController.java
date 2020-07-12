@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/2/21 5:27 下午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/env")
+@RequestMapping(BASE_URL +"/env")
 @Api(tags = "环境管理")
 public class EnvController {
 

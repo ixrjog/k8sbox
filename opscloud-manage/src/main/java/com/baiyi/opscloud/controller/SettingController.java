@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Map;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/6/4 5:33 下午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/setting")
+@RequestMapping(BASE_URL + "/setting")
 @Api(tags = "全局设置")
 public class SettingController {
 

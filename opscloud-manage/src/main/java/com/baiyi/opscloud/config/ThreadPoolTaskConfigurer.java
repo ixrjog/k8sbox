@@ -18,8 +18,6 @@ import static com.baiyi.opscloud.common.base.Global.ASYNC_POOL_TASK_EXECUTOR;
 @EnableAsync
 @Configuration
 public class ThreadPoolTaskConfigurer {
-    // https://blog.csdn.net/CJ_66/article/details/82503665
-    // https://blog.csdn.net/xie19900123/article/details/81771793
 
     /** 核心线程数（默认线程数） */
     private static final int corePoolSize = 50;

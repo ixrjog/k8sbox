@@ -13,9 +13,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//@Configuration
-//@EnableSwagger2
-
 @Configuration
 @EnableSwagger2
 @EnableKnife4j
@@ -36,12 +33,12 @@ public class SwaggerConfigurer {
     //api接口作者相关信息
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("OPSCLOUD 3.0")
-                .description("OPSCLOUD3 OPENAPI接口文档")
+                .title("K8SBOX")
+                .description("K8SBOX OPENAPI接口文档")
                 .version("0.0.1-SNAPSHOT")
                 .license("GNU General Public License v2")
                 .licenseUrl("https://www.gnu.org/licenses/old-licenses/gpl-2.0.html")
-                .contact(new Contact("白衣","https://github.com/ixrjog/opsCloud","baiyi@gegejia.com"))
+                .contact(new Contact("白衣","https://github.com/ixrjog/k8sbox","ixrjog@qq.com"))
                 .build();
     }
 }

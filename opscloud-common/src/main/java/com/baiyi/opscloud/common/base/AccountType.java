@@ -3,12 +3,7 @@ package com.baiyi.opscloud.common.base;
 
 
 public enum AccountType {
-    LDAP(0),
-    ZABBIX(1),
-    JUMPSEVER(2),
-    RAM(3),
-    IAM(4),
-    GITLAB(5);
+    LDAP(0);
 
     private int type;
 

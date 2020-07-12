@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/5/12 6:02 下午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/doc")
+@RequestMapping(BASE_URL + "/doc")
 @Api(tags = "文档管理")
 public class DocumentController {
 
@@ -43,7 +45,7 @@ public class DocumentController {
     }
 
     @ApiOperation(value = "更新帮助文档")
-    @PutMapping(value = "/user/save",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/user/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpResult<Boolean> saveUserDoc(@RequestBody @Valid DocumentVO.UserDoc userDoc) {
         return new HttpResult<>(documentFacade.saveUserDoc(userDoc));
     }

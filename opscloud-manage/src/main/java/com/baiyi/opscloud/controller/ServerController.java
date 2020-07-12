@@ -14,13 +14,15 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/2/21 4:45 下午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/server")
+@RequestMapping(BASE_URL +"/server")
 @Api(tags = "服务器管理")
 public class ServerController {
 

@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/5/21 10:40 上午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/keybox")
+@RequestMapping(BASE_URL +"/keybox")
 @Api(tags = "全局密钥配置(SSHKey)管理")
 public class KeyboxController {
 

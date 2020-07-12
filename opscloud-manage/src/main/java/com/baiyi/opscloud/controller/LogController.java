@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @author feixue
  */
 @RestController
-@RequestMapping("/log")
+@RequestMapping(BASE_URL +"/log")
 @Api(tags = "用户登录")
 public class LogController {
 

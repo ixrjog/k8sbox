@@ -17,13 +17,15 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/7/1 6:10 下午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/kubernetes/application")
+@RequestMapping(BASE_URL +"/kubernetes/application")
 @Api(tags = "Kubernetes管理")
 public class KubernetesApplicationController {
 

@@ -18,15 +18,18 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/2/13 8:02 下午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping( BASE_URL + "/auth")
 @Api(tags = "权限配置")
 public class AuthController {
+
     @Resource
     private AuthFacade authFacade;
 

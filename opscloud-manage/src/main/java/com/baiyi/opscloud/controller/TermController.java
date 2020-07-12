@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/5/25 4:10 下午
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/term")
+@RequestMapping(BASE_URL +"/term")
 @Api(tags = "Web终端管理")
 public class TermController {
 
