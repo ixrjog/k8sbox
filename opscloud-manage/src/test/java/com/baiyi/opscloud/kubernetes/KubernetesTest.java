@@ -2,10 +2,7 @@ package com.baiyi.opscloud.kubernetes;
 
 import com.baiyi.opscloud.BaseUnit;
 import com.baiyi.opscloud.facade.KubernetesFacade;
-import com.baiyi.opscloud.kubernetes.handler.KubernetesClusterHandler;
-import com.baiyi.opscloud.kubernetes.handler.KubernetesDeploymentHandler;
-import com.baiyi.opscloud.kubernetes.handler.KubernetesPodHandler;
-import com.baiyi.opscloud.kubernetes.handler.KubernetesServiceHandler;
+import com.baiyi.opscloud.kubernetes.handler.*;
 import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
@@ -37,6 +34,10 @@ public class KubernetesTest extends BaseUnit {
 
     @Resource
     private KubernetesFacade kubernetesFacade;
+
+
+    @Resource
+    private KubernetesNodeHandler kubernetesNodeHandler;
 
     @Test
     void getNamespaceListTest() {
@@ -98,6 +99,12 @@ public class KubernetesTest extends BaseUnit {
     void getPodTest() {
         Pod pod = kubernetesPodHandler.getPod("k8s-test", "test", "abtest-frontend-deployment-77cc6d9789-lb7km");
         System.err.println(pod);
+    }
+
+    @Test
+    void getNodeTest() {
+        NodeList nodeList = kubernetesNodeHandler.getNodeList("k8s-test");
+        System.err.println(nodeList);
     }
 
     @Test

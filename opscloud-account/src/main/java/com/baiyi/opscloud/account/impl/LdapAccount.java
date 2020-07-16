@@ -3,6 +3,7 @@ package com.baiyi.opscloud.account.impl;
 
 import com.baiyi.opscloud.account.IAccount;
 import com.baiyi.opscloud.account.builder.UserBuilder;
+import com.baiyi.opscloud.account.config.AuthConfig;
 import com.baiyi.opscloud.account.convert.LdapPersonConvert;
 import com.baiyi.opscloud.common.base.AccountType;
 import com.baiyi.opscloud.common.util.PasswordUtils;
@@ -49,12 +50,13 @@ public class LdapAccount extends BaseAccount implements IAccount {
     @Resource
     private OcAuthRoleService ocAuthRoleService;
 
+    @Resource
+    private AuthConfig authConfig;
 
     @Override
     protected List<OcUser> getUserList() {
         return personRepo.getPersonList().stream().map(UserBuilder::build).collect(Collectors.toList());
     }
-
 
     @Override
     protected int getAccountType() {
@@ -67,6 +69,10 @@ public class LdapAccount extends BaseAccount implements IAccount {
     }
 
 
+    private boolean isLdapAuthentication() {
+        return "ldap".equalsIgnoreCase(authConfig.getExternalAuthentication());
+    }
+
     /**
      * 创建
      *
@@ -74,7 +80,8 @@ public class LdapAccount extends BaseAccount implements IAccount {
      */
     @Override
     public Boolean create(OcUser user) {
-        user.setIsActive(true);
+        if (!isLdapAuthentication()) return true;
+            user.setIsActive(true);
         user.setSource("ldap");
         // 若密码为空生成初始密码
         String password = (StringUtils.isEmpty(user.getPassword()) ? PasswordUtils.getPW(PASSWORD_LENGTH) : user.getPassword());
@@ -103,6 +110,7 @@ public class LdapAccount extends BaseAccount implements IAccount {
      */
     @Override
     public Boolean delete(OcUser user) {
+        if (!isLdapAuthentication()) return true;
         try {
             if (personRepo.delete(user.getUsername())) {
                 ocUserService.delOcUserByUsername(user.getUsername());
@@ -117,6 +125,7 @@ public class LdapAccount extends BaseAccount implements IAccount {
 
     @Override
     public Boolean active(OcUser user, boolean active) {
+        if (!isLdapAuthentication()) return true;
         if (!active) {
             if (!personRepo.checkPersonInLdap(user.getUsername()))
                 return true; // 用户不存在
@@ -130,6 +139,7 @@ public class LdapAccount extends BaseAccount implements IAccount {
 
     @Override
     public Boolean update(OcUser user) {
+        if (!isLdapAuthentication()) return true;
         // 校验用户
         OcUser ocUser;
         if (!StringUtils.isEmpty(user.getUsername())) {
@@ -175,6 +185,7 @@ public class LdapAccount extends BaseAccount implements IAccount {
      */
     @Override
     public Boolean grant(OcUser user, String resource) {
+        if (!isLdapAuthentication()) return true;
         return groupRepo.addGroupMember(resource, user.getUsername());
     }
 
@@ -187,6 +198,7 @@ public class LdapAccount extends BaseAccount implements IAccount {
      */
     @Override
     public Boolean revoke(OcUser user, String resource) {
+        if (!isLdapAuthentication()) return true;
         return groupRepo.removeGroupMember(resource, user.getUsername());
     }
 

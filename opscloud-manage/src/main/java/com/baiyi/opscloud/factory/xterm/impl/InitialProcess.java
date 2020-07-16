@@ -45,13 +45,11 @@ public class InitialProcess extends BaseProcess implements IXTermProcess {
         if (!wrapper.isSuccess())
             return;
         Map<String, String> serverTreeHostPatternMap = wrapper.getBody();
-        boolean isAdmin = isOps(ocUser);
         heartbeat(ocTerminalSession.getSessionId());
-
         xtermMessage.getInstanceIds().forEach(k -> {
             if (serverTreeHostPatternMap.containsKey(k)) {
                 String host = serverTreeHostPatternMap.get(k);
-                HostSystem hostSystem = buildHostSystem(ocUser, host, xtermMessage, isAdmin);
+                HostSystem hostSystem = buildHostSystem(ocUser, host, xtermMessage);
                 RemoteInvokeHandler.openSSHTermOnSystem(ocTerminalSession.getSessionId(), k, hostSystem);
                 terminalFacade.addOcTerminalSessionInstance(TerminalSessionInstanceBuilder.build(ocTerminalSession, hostSystem));
             }

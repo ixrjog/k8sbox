@@ -38,15 +38,11 @@ public class DuplicateSessionProcess extends BaseProcess implements IXTermProces
     @Override
     public void xtermProcess(String message, Session session, OcTerminalSession ocTerminalSession) {
         DuplicateSessionMessage baseMessage = (DuplicateSessionMessage) getMessage(message);
-
         OcUser ocUser =  userFacade.getOcUserBySession();
-
         JSchSession jSchSession = JSchSessionMap.getBySessionId(ocTerminalSession.getSessionId(), baseMessage.getDuplicateInstanceId());
-
         assert jSchSession != null;
         String host = jSchSession.getHostSystem().getHost();
-        boolean isAdmin = isOps(ocUser);
-        HostSystem hostSystem = buildHostSystem(ocUser, host, baseMessage, isAdmin);
+        HostSystem hostSystem = buildHostSystem(ocUser, host, baseMessage);
 
         RemoteInvokeHandler.openSSHTermOnSystem(ocTerminalSession.getSessionId(), baseMessage.getInstanceId(), hostSystem);
         terminalFacade.addOcTerminalSessionInstance(TerminalSessionInstanceBuilder.build(ocTerminalSession,hostSystem ,baseMessage.getDuplicateInstanceId()));

@@ -111,8 +111,8 @@ public class ServerFacadeImpl implements ServerFacade {
             return new BusinessWrapper<>(ErrorEnum.SERVER_PRIVATE_IP_IS_NAME);
         if (ocServerService.queryOcServerByPrivateIp(server.getPrivateIp()) != null)
             return new BusinessWrapper<>(ErrorEnum.SERVER_PRIVATE_IP_CONFLICT);
-        if (StringUtils.isEmpty(server.getName()) || !RegexUtils.isServerNameRule(server.getName()))
-            return new BusinessWrapper<>(ErrorEnum.SERVER_NAME_NON_COMPLIANCE_WITH_RULES);
+//        if (StringUtils.isEmpty(server.getName()) || !RegexUtils.isServerNameRule(server.getName()))
+//            return new BusinessWrapper<>(ErrorEnum.SERVER_NAME_NON_COMPLIANCE_WITH_RULES);
         if (server.getServerGroupId() == null)
             return new BusinessWrapper<>(ErrorEnum.SERVER_GROUP_NOT_SELECTED);
         if (ocServerGroupService.queryOcServerGroupById(server.getServerGroupId()) == null)

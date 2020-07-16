@@ -16,11 +16,11 @@ import javax.websocket.Session;
 
 /**
  * @Author baiyi
- * @Date 2020/5/15 2:59 下午
+ * @Date 2020/7/14 2:33 下午
  * @Version 1.0
  */
 @Component
-public class InitialByIpProcess extends BaseProcess implements IXTermProcess {
+public class InitialByPodsProcess extends BaseProcess implements IXTermProcess {
 
     /**
      * 初始化XTerm
@@ -49,5 +49,4 @@ public class InitialByIpProcess extends BaseProcess implements IXTermProcess {
     protected BaseMessage getMessage(String message) {
         return new GsonBuilder().create().fromJson(message, InitialIpMessage.class);
     }
-
 }

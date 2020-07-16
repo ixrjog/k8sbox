@@ -7,7 +7,12 @@ package com.baiyi.opscloud.common.base;
  */
 public class SettingName {
 
-    public static final String SERVER_HIGH_AUTHORITY_ACCOUNT = "SERVER_HIGH_AUTHORITY_ACCOUNT";
+    public static final String NODE_HIGH_AUTHORITY_ACCOUNT = "NODE_HIGH_AUTHORITY_ACCOUNT";
 
+    public static final String DOCKER_ACCOUNT = "DOCKER_ACCOUNT";
+
+    public static final String DOCKER_SSH_PORT = "DOCKER_SSH_PORT";
+
+    public static final String LOGION_PATTERN = "LOGION_PATTERN";
 
 }

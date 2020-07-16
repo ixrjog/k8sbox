@@ -29,8 +29,10 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 @Slf4j
-@ServerEndpoint(value = "/ws/xterm")
+@ServerEndpoint(value = BASE_URL + "/ws/xterm")
 @Component
 public class XTermWSController implements InitializingBean {
 

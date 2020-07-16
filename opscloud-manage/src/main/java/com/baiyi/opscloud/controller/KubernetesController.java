@@ -23,7 +23,7 @@ import static com.baiyi.opscloud.common.base.Global.BASE_URL;
  * @Version 1.0
  */
 @RestController
-@RequestMapping(BASE_URL +"/kubernetes")
+@RequestMapping(BASE_URL + "/kubernetes")
 @Api(tags = "Kubernetes管理")
 public class KubernetesController {
 
@@ -90,13 +90,19 @@ public class KubernetesController {
         return new HttpResult<>(kubernetesFacade.queryKubernetesExcludeNamespace(excludeQuery));
     }
 
+    @ApiOperation(value = "同步集群的Node")
+    @GetMapping(value = "/cluster/node/sync", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpResult<Boolean> syncKubernetesClusterNode(@RequestParam @Valid int id) {
+        kubernetesFacade.syncKubernetesClusterNode(id);
+        return new HttpResult<>(BusinessWrapper.SUCCESS);
+    }
+
     @ApiOperation(value = "更新无状态配置")
     @PutMapping(value = "/deployment/sync", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpResult<Boolean> syncKubernetesDeployment(@RequestParam @Valid int namespaceId) {
         kubernetesFacade.syncKubernetesDeployment(namespaceId);
         return new HttpResult<>(BusinessWrapper.SUCCESS);
     }
-
 
     @ApiOperation(value = "分页查询无状态配置")
     @PostMapping(value = "/deployment/page/query", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -109,7 +115,6 @@ public class KubernetesController {
     public HttpResult<DataTable<KubernetesTemplateVO.Template>> queryKubernetesTemplatePage(@RequestBody @Valid KubernetesTemplateParam.PageQuery pageQuery) {
         return new HttpResult<>(kubernetesFacade.queryKubernetesTemplatePage(pageQuery));
     }
-
 
     @ApiOperation(value = "新增模版配置")
     @PostMapping(value = "/template/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

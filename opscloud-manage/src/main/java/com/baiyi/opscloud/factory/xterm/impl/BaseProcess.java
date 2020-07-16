@@ -1,13 +1,15 @@
 package com.baiyi.opscloud.factory.xterm.impl;
 
 import com.baiyi.opscloud.common.base.AccessLevel;
-import com.baiyi.opscloud.common.base.BusinessType;
 import com.baiyi.opscloud.common.base.SettingName;
 import com.baiyi.opscloud.common.redis.RedisUtil;
 import com.baiyi.opscloud.common.util.IOUtils;
 import com.baiyi.opscloud.common.util.bae64.CacheKeyUtils;
 import com.baiyi.opscloud.domain.bo.SSHKeyCredential;
-import com.baiyi.opscloud.domain.generator.opscloud.*;
+import com.baiyi.opscloud.domain.generator.opscloud.OcServer;
+import com.baiyi.opscloud.domain.generator.opscloud.OcTerminalSession;
+import com.baiyi.opscloud.domain.generator.opscloud.OcTerminalSessionInstance;
+import com.baiyi.opscloud.domain.generator.opscloud.OcUser;
 import com.baiyi.opscloud.facade.*;
 import com.baiyi.opscloud.factory.xterm.IXTermProcess;
 import com.baiyi.opscloud.factory.xterm.XTermProcessFactory;
@@ -79,26 +81,21 @@ public abstract class BaseProcess implements IXTermProcess, InitializingBean {
         return userPermissionFacade.checkAccessLevel(ocUser, AccessLevel.OPS.getLevel()).isSuccess();
     }
 
-    protected HostSystem buildHostSystem(OcUser ocUser, String host, BaseMessage baseMessage, boolean isAdmin) {
-        OcServer ocServer = ocServerService.queryOcServerByIp(host);
-        OcUserPermission ocUserPermission = new OcUserPermission();
-        ocUserPermission.setUserId(ocUser.getId());
-        ocUserPermission.setBusinessId(ocServer.getServerGroupId());
-        ocUserPermission.setBusinessType(BusinessType.SERVER_ADMINISTRATOR_ACCOUNT.getType());
-
-        boolean loginType = false;
-        if (baseMessage.getLoginUserType() == 1) {
-            loginType = isAdmin || ocUserPermissionService.queryOcUserPermissionByUniqueKey(ocUserPermission) != null;
+    protected HostSystem buildHostSystem(OcUser ocUser, String host, BaseMessage baseMessage) {
+        String loginPattern = settingFacade.querySetting(SettingName.LOGION_PATTERN);
+        SSHKeyCredential sshKeyCredential;
+        if ("host".equalsIgnoreCase(loginPattern)) {
+            // 主机模式
+            OcServer ocServer = ocServerService.queryOcServerByIp(host);
+            sshKeyCredential = keyboxFacade.getSSHKeyCredential(ocServer.getLoginUser());
+        } else {
+            // 容器模式
+            sshKeyCredential = keyboxFacade.getSSHKeyCredential(settingFacade.querySetting(SettingName.DOCKER_ACCOUNT));
         }
-
-        SSHKeyCredential sshKeyCredential = loginType ? keyboxFacade.getSSHKeyCredential(settingFacade.querySetting(SettingName.SERVER_HIGH_AUTHORITY_ACCOUNT))
-                : keyboxFacade.getSSHKeyCredential(ocServer.getLoginUser());
-
         HostSystem hostSystem = new HostSystem();
         hostSystem.setHost(host);
         hostSystem.setSshKeyCredential(sshKeyCredential);
         hostSystem.setInitialMessage(baseMessage);
-
         return hostSystem;
     }
 

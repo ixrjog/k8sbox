@@ -19,13 +19,15 @@ public class ServerBO {
     private String name;
     private Integer serverGroupId;
     private Integer loginType;
-    private String loginUser;
+    @Builder.Default
+    private String loginUser = "root";
     private Integer envType;
     private String publicIp;
     private String privateIp;
     private Integer serverType;
     private String area;
-    private Integer serialNumber;
+    @Builder.Default // 0 自动递增
+    private Integer serialNumber = 0;
     @Builder.Default
     private Integer monitorStatus = -1;
     @Builder.Default

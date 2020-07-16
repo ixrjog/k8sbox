@@ -21,6 +21,8 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.baiyi.opscloud.common.base.Global.BASE_URL;
+
 /**
  * @Author baiyi
  * @Date 2020/1/16 10:12 上午
@@ -57,6 +59,8 @@ public class AuthBaseFacadeImpl implements AuthBaseFacade {
 
     @Override
     public BusinessWrapper<Boolean> checkUserHasResourceAuthorize(String token, String resourceName) {
+
+        resourceName = resourceName.replace(BASE_URL, "");
 
         OcAuthResource ocAuthResource = ocAuthResourceService.queryOcAuthResourceByName(resourceName);
         if (ocAuthResource == null) // 资源不存在
@@ -166,12 +170,12 @@ public class AuthBaseFacadeImpl implements AuthBaseFacade {
     @Override
     public void authorizedAdminAllRole(OcUser ocUser) {
         ocAuthRoleService.queryAllOcAuthRole().forEach(e -> {
-            try{
+            try {
                 OcAuthUserRole ocAuthUserRole = new OcAuthUserRole();
                 ocAuthUserRole.setRoleId(e.getId());
                 ocAuthUserRole.setUsername(ocUser.getUsername());
                 ocAuthUserRoleService.addOcAuthUserRole(ocAuthUserRole);
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
             }
         });
     }

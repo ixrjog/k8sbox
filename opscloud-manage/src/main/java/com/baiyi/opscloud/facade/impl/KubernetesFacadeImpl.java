@@ -6,11 +6,15 @@ import com.baiyi.opscloud.decorator.kubernetes.KubernetesClusterNamespaceDecorat
 import com.baiyi.opscloud.decorator.kubernetes.KubernetesTemplateDecorator;
 import com.baiyi.opscloud.domain.BusinessWrapper;
 import com.baiyi.opscloud.domain.DataTable;
-import com.baiyi.opscloud.domain.generator.opscloud.*;
+import com.baiyi.opscloud.domain.generator.opscloud.OcKubernetesApplicationInstance;
+import com.baiyi.opscloud.domain.generator.opscloud.OcKubernetesCluster;
+import com.baiyi.opscloud.domain.generator.opscloud.OcKubernetesClusterNamespace;
+import com.baiyi.opscloud.domain.generator.opscloud.OcKubernetesTemplate;
 import com.baiyi.opscloud.domain.param.kubernetes.*;
 import com.baiyi.opscloud.domain.vo.kubernetes.*;
 import com.baiyi.opscloud.facade.KubernetesFacade;
 import com.baiyi.opscloud.facade.kubernetes.KubernetesDeploymentFacade;
+import com.baiyi.opscloud.facade.kubernetes.KubernetesNodeFacade;
 import com.baiyi.opscloud.facade.kubernetes.KubernetesPodFacade;
 import com.baiyi.opscloud.facade.kubernetes.KubernetesServiceFacade;
 import com.baiyi.opscloud.kubernetes.client.KubernetesClientContainer;
@@ -77,6 +81,9 @@ public class KubernetesFacadeImpl implements KubernetesFacade {
 
     @Resource
     private KubernetesPodFacade kubernetesPodFacade;
+
+    @Resource
+    private KubernetesNodeFacade kubernetesNodeFacade;
 
     @Override
     public BusinessWrapper<List<KubernetesPodVO.Pod>> queryMyKubernetesPod(KubernetesPodParam.QueryParam queryParam) {
@@ -179,6 +186,11 @@ public class KubernetesFacadeImpl implements KubernetesFacade {
     }
 
     @Override
+    public  void syncKubernetesClusterNode(int id){
+        kubernetesNodeFacade.syncKubernetesNode(id);
+    }
+
+    @Override
     public DataTable<KubernetesDeploymentVO.Deployment> queryKubernetesDeploymentPage(KubernetesDeploymentParam.PageQuery pageQuery) {
         return kubernetesDeploymentFacade.queryKubernetesDeploymentPage(pageQuery);
     }
@@ -195,7 +207,7 @@ public class KubernetesFacadeImpl implements KubernetesFacade {
         DataTable<OcKubernetesTemplate> table = getKubernetesTemplateDataTable(pageQuery);
         List<KubernetesTemplateVO.Template> page = BeanCopierUtils.copyListProperties(table.getData(), KubernetesTemplateVO.Template.class);
         OcKubernetesApplicationInstance ocKubernetesApplicationInstance = ocKubernetesApplicationInstanceService.queryOcKubernetesApplicationInstanceById(pageQuery.getInstanceId());
-        return new DataTable<>(page.stream().map(e -> kubernetesTemplateDecorator.decorator(e,ocKubernetesApplicationInstance)).collect(Collectors.toList()), table.getTotalNum());
+        return new DataTable<>(page.stream().map(e -> kubernetesTemplateDecorator.decorator(e, ocKubernetesApplicationInstance)).collect(Collectors.toList()), table.getTotalNum());
     }
 
     private DataTable<OcKubernetesTemplate> getKubernetesTemplateDataTable(KubernetesTemplateParam.PageQuery pageQuery) {

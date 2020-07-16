@@ -34,6 +34,8 @@ public interface KubernetesFacade {
 
     BusinessWrapper<List<KubernetesClusterNamespaceVO.Namespace>> queryKubernetesExcludeNamespace(KubernetesClusterNamespaceParam.ExcludeQuery excludeQuery);
 
+    void syncKubernetesClusterNode(int id);
+
     void syncKubernetesDeployment(int namespaceId);
 
     void syncKubernetesService(int namespaceId);
@@ -44,6 +46,7 @@ public interface KubernetesFacade {
 
     /**
      * 查询实例模版
+     *
      * @param pageQuery
      * @return
      */

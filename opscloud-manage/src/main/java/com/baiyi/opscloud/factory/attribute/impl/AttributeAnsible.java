@@ -123,7 +123,7 @@ public class AttributeAnsible extends AttributeBase {
     private String acqHostLine(OcServer ocServer) {
         String serverName = ServerBaseFacade.acqServerName(ocServer);
         return Joiner.on(" ").join(ocServer.getPrivateIp(),
-                "ansible_ssh_user=" + settingFacade.querySetting(SettingName.SERVER_HIGH_AUTHORITY_ACCOUNT),
+                "ansible_ssh_user=" + settingFacade.querySetting(SettingName.NODE_HIGH_AUTHORITY_ACCOUNT),
                 "cloudServerType=" + getCloudServerType(ocServer),
                 "hostname=" + serverName,
                 "#", serverName, "\n");

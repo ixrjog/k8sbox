@@ -3,7 +3,7 @@
 # 启用LDAP请填写 ldap
 # 初始化管理员账户
 auth:
-  externalAuthentication: ldap
+  externalAuthentication:
   admin:
-    username:
-    password:
+    username: opscloud
+    password: opscloud
